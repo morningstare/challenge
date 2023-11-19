@@ -1,0 +1,26 @@
+*{
+    padding: 0;margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container{
+    width: 600px;
+    height: 600px;
+    outline: solid 5px greenyellow;
+}
+
+img{
+    transition: 300ms;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+}
