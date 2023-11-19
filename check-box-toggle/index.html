@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+     input{
+        width: 0;height: 0;opacity: 0;
+     }
+
+
+label{
+    position: relative;
+    width: 100px;
+    height: 50px;
+    border-radius: 5rem;
+    /* background-color: white; */
+    cursor: pointer;
+}
+
+
+span{
+    position: absolute;
+    top: 0;bottom: 0;;left: 0;right: 0;
+    border-radius: 5rem;
+    background-color: orange;
+    transition: 300ms;
+}
+
+
+span::after{
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 100%;
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    transition: 300ms;
+}
+
+input:checked + span{
+    background-color: aqua;
+    transition: 300ms;
+}
+
+input:checked + span::after{
+    transform: translateX(60px);
+    transition: 300ms;
+    /* background-color: orange; */
+}
+
+    </style>
+</head>
+<body>
+    <label>
+        <input type="checkbox">
+        <span></span>
+    </label>
+</body>
+</html>

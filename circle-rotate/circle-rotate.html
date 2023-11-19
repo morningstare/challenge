@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>Hello</div>
+
+    <script>
+      const $div = document.querySelector("div");
+      let dragging = false;
+      let dragStart = { x: 0, y: 0 };
+      let angleStarted = 0;
+      let angle = 0;
+
+      const posToAngles = (e) => {
+        const bounds = $div.getBoundingClientRect();
+
+        const center = {
+          x: bounds.left + bounds.width / 2,
+          y: bounds.top + bounds.height / 2,
+        };
+        const dx = e.clientX - center.x;
+        const dy = e.clientY - center.y;
+
+        radians = Math.atan2(dy, dx);
+        return (radians / Math.PI) * 180;
+      };
+
+      $div.addEventListener("mousedown", (e) => {
+        dragging = true;
+        angleStarted = angle - posToAngles(e);
+      });
+
+      $div.addEventListener("mousemove", (e) => {
+        if (dragging) {
+          angle = posToAngles(e) + angleStarted;
+          $div.style.transform = `rotate(${angle}deg)`;
+        }
+      });
+
+      window.addEventListener("mouseup", (e) => {
+        dragging = false;
+        angleStarted = 0;
+      });
+    </script>
+
+    <style>
+      body {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        overflow: hidden;
+      }
+
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2rem;
+
+        width: 400px;
+        height: 400px;
+
+        border-radius: 100%;
+        border: 2px solid #000;
+      }
+    </style>
+  </body>
+</html>

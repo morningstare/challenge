@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <button onclick="start()">start</button>
+    <h1>morningstare:)</h1>
+    <button onclick="stop()">stop</button>
+</body>
+<script>
+
+
+var id;
+var number = 0;
+var minut = 0;
+    function message(){
+        const h1 = document.querySelector('h1').innerText  = number + ' mili second';
+        number++;
+        console.log('true');
+        
+    }
+    function start(){
+       id = window.setInterval(message,1);
+    }
+
+    function stop(){
+        window.clearInterval(id);
+    }
+</script>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background-color: aqua;
+            display: flex;
+            /* flex-direction: column; */
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            gap: 1rem;
+        }
+
+        canvas {
+            box-shadow: 0 1px 50px 1px rgb(210, 210, 210);
+            background-color: white;
+            border-radius: 5px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        img {
+            width: 100px;
+            height: 70px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+
+        button{
+            border: 0;
+            outline: 0;
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="image-container">
+        <div><img
+                src="./image/./attractive-seductive-sensual-stylish-woman-boho-dress-sitting-vintage-retro-cafe-holding-perfume.jpg"
+                alt="" class="image"></div>
+        <div><img src="./image/./beautiful-aerial-shot-fronalpstock-mountains-switzerland-beautiful-pink-blue-sky.jpg"
+                alt="" class="image"></div>
+        <div><img src="./image/./elephant-walking-green-field-amboseli-nationalpark-kenya.jpg" alt="" class="image"></div>
+        <div><img src="./image/./sunset-time-tropical-beach-sea-with-coconut-palm-tree.jpg" alt="" class="image"></div>
+        <input type="color" placeholder="change the color" class="color">
+        <button onclick="cleare()">cleare board</button>
+    </div>
+    <canvas></canvas>
+    <script>
+        const canvas = document.querySelector('canvas')
+        const ctx = canvas.getContext('2d');
+        var isDrawing = false;
+
+        canvas.height = innerHeight / 2;
+        canvas.width = innerWidth / 2;
+
+
+        const color = document.querySelector('.color');
+
+        window.addEventListener('mousedown',startDrawing);
+        window.addEventListener('mousemove',draw);
+        window.addEventListener('mouseup',stopDrawing);
+
+        function startDrawing(event) {
+            isDrawing = true;
+            draw(event);
+        }
+
+        function draw(event) {
+            if (!isDrawing) {
+                return;
+            }
+
+            var x = event.clientX - canvas.offsetLeft;
+            var y = event.clientY - canvas.offsetTop;
+
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = color.value;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function setbackground(){
+            const image = document.querySelectorAll('.image');
+
+            image.forEach(element => {
+                element.addEventListener('click',(e)=>{
+                    canvas.style.backgroundImage = `url(${e.target.src})`
+                })
+            });
+        }
+
+
+        function cleare(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        }
+
+
+        setbackground();
+    </script>
+</body>
+
+</html>

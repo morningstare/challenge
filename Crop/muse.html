@@ -1,0 +1,84 @@
+<html>
+<head>
+    <title>Crop Image with Mouse</title>
+    <style>
+
+
+
+        #canvas {
+            border: 1px solid #ccc;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <input type="file" id="upload" accept="image/*">
+    <div id="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+    <button id="crop">Crop</button>
+
+    <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var image = new Image();
+        var cropButton = document.getElementById("crop");
+        var isCropping = false;
+        var cropStartX, cropStartY, cropWidth, cropHeight;
+
+        document.getElementById("upload").addEventListener("change", function (e) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                image.onload = function () {
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    context.drawImage(image, 0, 0);
+                }
+                image.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        canvas.addEventListener("mousedown", function (e) {
+            if (!isCropping) {
+                isCropping = true;
+                cropStartX = e.offsetX;
+                cropStartY = e.offsetY;
+            }
+        });
+
+        canvas.addEventListener("mousemove", function (e) {
+            if (isCropping) {
+                cropWidth = e.offsetX - cropStartX;
+                cropHeight = e.offsetY - cropStartY;
+                drawCropRect();
+            }
+        });
+
+        canvas.addEventListener("mouseup", function () {
+            isCropping = false;
+        });
+
+        cropButton.addEventListener("click", function () {
+            var croppedCanvas = document.createElement("canvas");
+            var croppedContext = croppedCanvas.getContext("2d");
+            croppedCanvas.width = Math.abs(cropWidth);
+            croppedCanvas.height = Math.abs(cropHeight);
+            croppedContext.drawImage(canvas, cropStartX, cropStartY, cropWidth, cropHeight, 0, 0, Math.abs(cropWidth), Math.abs(cropHeight));
+
+            var croppedImage = new Image();
+            croppedImage.src = croppedCanvas.toDataURL("image/png");
+            document.body.appendChild(croppedImage);
+        });
+
+        function drawCropRect() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(image, 0, 0);
+            context.strokeStyle = "red";
+            context.lineWidth = 2;
+            context.strokeRect(cropStartX, cropStartY, cropWidth, cropHeight);
+        }
+    </script>
+</body>
+</html>

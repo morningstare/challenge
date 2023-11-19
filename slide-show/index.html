@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .slider-container {
+            position: relative;
+            background-color: gray;
+            width: 60%;
+            height: 70%;
+            box-shadow: 0 1px 50px rgb(145, 145, 145);
+            /* overflow: scroll; */
+
+        }
+
+
+
+        .slider-container>div {
+            display: none;
+            width: 100%;
+            height: 100%;
+            
+        }
+
+
+       
+
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        button {
+            border: 0;
+            outline: 0;
+        }
+
+
+        span {
+            display: flex;
+        }
+
+
+
+        .slider-container>button {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            top: 50%;
+        }
+
+
+        .slide-right {
+            right: 0;
+        }
+
+
+        .left-icon {
+            width: 20px;
+            height: 20px;
+            border-top: solid 5px orangered;
+            border-right: solid 5px orangered;
+            rotate: -135deg;
+        }
+
+        .right-icon {
+            width: 20px;
+            height: 20px;
+            border-top: solid 5px orangered;
+            border-right: solid 5px orangered;
+            rotate: 45deg;
+
+        }
+
+
+        .button-container {
+            width: 60%;
+            height: 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .button-container>button {
+            border-radius: 100%;
+            cursor: pointer;
+        }
+
+        .dote {
+            width: 20px;
+            height: 20px;
+            background-color: rgb(201, 201, 201);
+            border-radius: 100%;
+        }
+
+        .active {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="slider-container">
+        <button class="slide-left" onclick="pluseSlides(-1)"><span class="left-icon"></span></button>
+        <div class="slider"><img
+                src="./image/./attractive-seductive-sensual-stylish-woman-boho-dress-sitting-vintage-retro-cafe-holding-perfume.jpg"
+                alt=""></div>
+        <div class="slider"><img
+                src="./image/./front-view-black-fragrance-bottle-with-yellow-design-isolated-white-wall.jpg" alt="">
+        </div>
+        <div class="slider"><img src="./image/./front-view-black-fragrance-with-golden-cap-white-isolated-desk.jpg"
+                alt=""></div>
+        <div class="slider"><img src="./image/front-view-light-bottle-with-golden-cap-isolated-white-floor.jpg" alt="">
+        </div>
+        <div class="slider"><img
+                src="./image/./front-view-purple-silver-bottle-designed-beautiful-isolated-white-desk.jpg" alt=""></div>
+        <button class="slide-right" onclick="pluseSlides(1)"><span class="right-icon"></span></button>
+    </section>
+    <section class="button-container">
+        <button onclick="slideShow(1)"><span class="dote"></span></button>
+        <button onclick="slideShow(2)"><span class="dote"></span></button>
+        <button onclick="slideShow(3)"><span class="dote"></span></button>
+        <button onclick="slideShow(4)"><span class="dote"></span></button>
+        <button onclick="slideShow(5)"><span class="dote"></span></button>
+    </section>
+    <script>
+        var index = 1;
+        showSlide(index);
+        function pluseSlides(x) {
+            showSlide(index += x);
+        }
+        function slideShow(x) {
+            showSlide(index = x);
+        }
+        function showSlide(x) {
+            var slides = document.getElementsByClassName('slider');
+            var dots = document.getElementsByClassName('dote');
+            if (x > slides.length) {
+                index = 1;
+            }
+            if (x < 1) {
+                index = slides.length;
+            }
+            for (let i = 0; i < slides.length; i++)
+                slides[i].style.display = 'none';
+            for (let i = 0; i < dots.length; i++)
+                dots[i].className = dots[i].className.replace(" active", "");
+            slides[index - 1].style.display = "block";
+            dots[index - 1].className += " active";
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            gap: 3rem;
+        }
+        img{
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<button onclick="in_opacity()">opaciti-in</button>
+<div>
+    <img src="../still-life-cosmetic-products.jpg" alt="">
+</div>
+<button onclick="out_opacity()">opaciti-out</button>
+
+
+    <script>
+
+        var id;
+        var inid;
+
+        var img = document.querySelector('img');
+        
+        function in_opacity(){
+            id = setInterval(hide,20)
+        }
+
+        function hide(){
+            opacity = Number(window.getComputedStyle(img).getPropertyValue('opacity'));
+            if(opacity > 0){
+                opacity = opacity -0.01;
+                img.style.opacity = opacity
+            }else{
+                window.clearInterval(id);
+            }
+            console.log(opacity);
+        }
+
+
+        function onhide(){
+            opacity = Number(window.getComputedStyle(img).getPropertyValue('opacity'));
+            if(opacity < 1){
+                opacity = opacity +0.01;
+                img.style.opacity = opacity
+            }else{
+                window.clearInterval(inid);
+            }
+        }
+
+
+        function out_opacity(){
+            inid = setInterval(onhide,20);
+            
+        }
+    </script>
+</body>
+</html>

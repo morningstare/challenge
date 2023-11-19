@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            background-color: gray;
+        }
+
+        section{
+            width: auto;
+            height: auto;
+        }
+        .upload{
+            width: 900px;
+            height: 700px;
+            border: solid 2px white;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <section class="center">
+        <input type="file" value="select file">
+        <div class="upload"></div>
+    </section>
+
+
+    <script>
+        const upload = document.querySelector('input');
+        upload.addEventListener('change',function(e){
+            var filereader = new FileReader();
+            filereader.onload = function(event){
+                const div = document.querySelector('.upload').style.backgroundImage = "url("+ event.target.result +")"
+
+            }
+
+            filereader.readAsDataURL(e.target.files[0]);
+        });
+    </script>
+</body>
+</html>

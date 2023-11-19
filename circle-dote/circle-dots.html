@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      function lerp(a, b, t) {
+        return a + (b - a) * t;
+      }
+
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const cursor = {
+        hold: false,
+        x: {
+          curr: innerWidth / 2,
+          target: innerWidth / 2,
+        },
+        y: {
+          curr: innerHeight / 2,
+          target: innerHeight / 2,
+        },
+        r: {
+          curr: 50,
+          target: 50,
+        },
+      };
+
+      const maxRadius = 50;
+      const minRadius = 15;
+      const minSpeed = 0.03;
+      const maxSpeed = 2;
+
+      cursor.dh = minSpeed;
+
+      addEventListener("mousemove", (e) => {
+        cursor.x.target = e.clientX;
+        cursor.y.target = e.clientY;
+      });
+
+      addEventListener("mousedown", (e) => {
+        cursor.r.target = minRadius;
+        cursor.hold = true;
+      });
+
+      addEventListener("mouseup", (e) => {
+        cursor.r.target = maxRadius;
+        cursor.hold = false;
+      });
+      const numOfCircles = 10;
+
+      const circles = [];
+      for (let i = 0; i < numOfCircles; i++) {
+        circles.push({
+          rotate: 0,
+          i,
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+        circles.forEach((circle) => {
+          ctx.beginPath();
+          let p = circle.i / numOfCircles;
+          const x =
+            cursor.x.curr +
+            cursor.r.curr * Math.cos(circle.rotate + p * Math.PI * 2);
+          const y =
+            cursor.y.curr +
+            cursor.r.curr * Math.sin(circle.rotate + p * Math.PI * 2);
+
+          ctx.arc(x, y, 2, 0, Math.PI * 2, false);
+          ctx.fill();
+        });
+      }
+
+      function animate() {
+        cursor.x.curr = lerp(cursor.x.curr, cursor.x.target, 0.3);
+        cursor.y.curr = lerp(cursor.y.curr, cursor.y.target, 0.3);
+        cursor.r.curr = lerp(cursor.r.curr, cursor.r.target, 0.2);
+
+        if (cursor.hold) {
+          cursor.dh = maxSpeed;
+        } else {
+          cursor.dh = minSpeed;
+        }
+
+        circles.forEach((circle) => {
+          circle.rotate += cursor.dh;
+        });
+
+        draw();
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>

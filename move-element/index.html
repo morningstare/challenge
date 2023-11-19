@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+*{
+    padding: 0;margin: 0;
+    box-sizing: border-box;
+}
+
+.move{
+    width: 100px;height: 100px;
+    background-color: red;
+    position: absolute;
+}
+    </style>
+</head>
+<body>
+    <div class="move"></div>
+    <script>
+        const move = document.querySelector('.move');
+        var isdrag = false;
+
+
+        move.addEventListener('mousedown',dragstart);
+        window.addEventListener('mousemove',drag);
+        window.addEventListener('mouseup',dragend);
+
+
+
+        function dragstart(e){
+            isdrag = true;
+
+            drag(e);
+
+        }
+
+        function drag(e){
+            if(!isdrag){
+                return;
+            }
+
+            // var x = e.clientX - move.offsetLeft;
+            // var y = e.clientY - move.offsetTop;
+
+            move.style.top = e.y - 50 + "px";
+            move.style.left = e.x - 50 + "px"
+        }
+
+
+        function dragend(){
+            isdrag = false;
+        }
+    </script>
+</body>
+</html>
